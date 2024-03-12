@@ -62,7 +62,7 @@
       },
       "properties": {
         "name": "[parameters('WebAppName')]",
-		"siteConfig": {
+		    "siteConfig": {
             "metadata": [
                 {
                     "name": "CURRENT_STACK",
@@ -167,6 +167,15 @@
 			"WEBSITE_LOAD_USER_PROFILE":"1",
 			"ApplicationUrl":"[concat('https://',parameters('WebAppName'), '.azurewebsites.net')]"
           }
+        },
+        {
+          "type": "Microsoft.Web/sites/siteextensions",
+          "apiVersion": "2023-01-01",
+          "name": "[concat(parameters('WebAppName'), '/AspNetCoreRuntime.6.0.x64')]",
+          "location": "[resourceGroup().location]",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/sites', parameters('WebAppName'))]"
+          ]
         }
       ]
     },
@@ -182,15 +191,6 @@
       "properties": {
         "accountType": "[parameters('storageAccountType')]"
       }
-    },
-    {
-      "type": "Microsoft.Web/sites/siteextensions",
-      "apiVersion": "2023-01-01",
-      "name": "[concat(parameters('WebAppName'), '/AspNetCoreRuntime.6.0.x64')]",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-          "[resourceId('Microsoft.Web/sites', parameters('WebAppName'))]"
-      ]
-    }    
+    }   
   ]
 }
